@@ -143,6 +143,24 @@ p { margin: 0 0 0.9rem; }
 .hero-card strong { font-family: var(--display); }
 .hero-card span { color: var(--muted); }
 
+.pickup {
+  overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: linear-gradient(105deg, rgba(0, 176, 230, 0.13), rgba(255, 255, 255, 0.025) 58%, rgba(245, 196, 0, 0.08));
+}
+.pickup-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  min-height: 300px;
+  padding-block: 2rem;
+}
+.pickup-copy > p:not(.kicker) { max-width: 35rem; color: var(--muted); }
+.pickup-copy .btn { margin-top: 0.4rem; }
+.pickup-visual { width: 100%; max-width: 560px; justify-self: end; }
+.pickup-visual svg { width: 100%; height: auto; }
+
 .services, .epson, .duo, .steps, .place, .contact { padding: 4rem 0; }
 section[id] { scroll-margin-top: 110px; }
 .services { background: rgba(255, 255, 255, 0.02); }
@@ -294,11 +312,13 @@ form .btn { margin-top: 0.8rem; }
 }
 
 @media (max-width: 900px) {
-  .hero-grid, .split, .place-grid, .contact-grid, .duo-grid, .cards, .step-list {
+  .hero-grid, .pickup-inner, .split, .place-grid, .contact-grid, .duo-grid, .cards, .step-list {
     grid-template-columns: 1fr;
   }
   .nav-toggle { display: inline-flex; }
   .hero-card img { display: none; }
+  .pickup-inner { gap: 0.5rem; }
+  .pickup-visual { max-width: 460px; justify-self: center; }
   .nav {
     display: none;
     position: absolute;
