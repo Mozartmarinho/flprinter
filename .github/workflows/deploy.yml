@@ -1,0 +1,31 @@
+name: Deploy via ftp
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: FTP Deploy Locaweb
+        env:
+          FTP_HOST: ${{ secrets.HOST }}
+          FTP_USER: ${{ secrets.USER }}
+          FTP_PASS: ${{ secrets.PASS }}
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lftp
+          lftp -p 21 -u "$FTP_USER","$FTP_PASS" "$FTP_HOST" <<'EOF'
+          set ftp:ssl-allow false
+          set ssl:verify-certificate false
+          set ftp:passive-mode true
+          set net:timeout 30
+          set net:max-retries 2
+          mirror --reverse --continue --dereference --verbose -x ^\.git/ -x ^\.github/ -x ^\.gitignore$ -x ^\.nojekyll$ ./ ./public_html/
+          quit
+          EOF
